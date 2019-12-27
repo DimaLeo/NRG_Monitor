@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/centralHub"
+            android:title="Central Hub" />
+        <item
+            android:id="@+id/suggestions"
+            android:title="Suggestions" />
+        <item
+            android:id="@+id/about"
+            android:title="About" />
+
+    </group>
+
+    <item android:title="One tap actions">
+        <menu>
+            <item
+                android:id="@+id/log_out"
+                android:title="Log out" />
+            <item
+                android:id="@+id/other"
+                android:title="Something else" />
+
+        </menu>
+    </item>
+
+
+</menu>
