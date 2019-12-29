@@ -1,8 +1,10 @@
 package com.example.nrg_monitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,6 +49,18 @@ public class activity_login extends AppCompatActivity {
 
         handler.postDelayed(runnable2,1000);
         handler.postDelayed(runnable1, 2000);
+
+        Button sign_up_button = findViewById(R.id.signup_button);
+        sign_up_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent sign_up_intent = new Intent(activity_login.this,RegisterActivity.class);
+                startActivity(sign_up_intent);
+
+            }
+        });
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
