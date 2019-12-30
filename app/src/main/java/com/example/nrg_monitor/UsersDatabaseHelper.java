@@ -2,8 +2,10 @@ package com.example.nrg_monitor;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQuery;
 
 import androidx.annotation.Nullable;
 
@@ -56,7 +58,47 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
         long result = usersDb.insert(TABLE_NAME, null, cv);
 
+        //in SQLiteOpenHelper insert declaration if the result is -1 then the transaction has failed
         return result != -1;
     }
+
+    public boolean emailExists(String email){
+
+
+        SQLiteDatabase usersDb = getWritableDatabase();
+
+        String query = "SELECT "+UserEntry.COLUMN_EMAIL+
+                       " FROM "+TABLE_NAME +
+                       " WHERE "+UserEntry.COLUMN_EMAIL+" =?";
+
+        Cursor cursor = usersDb.rawQuery(query,new String[]{email});
+
+        if(cursor.getCount()>0){
+            cursor.close();
+            return true;
+        }
+        else return false;
+
+    }
+
+    public boolean usernameExists(String username){
+
+
+        SQLiteDatabase usersDb = getWritableDatabase();
+
+        String query = "SELECT "+UserEntry.COLUMN_USR_NAME+
+                " FROM "+TABLE_NAME +
+                " WHERE "+UserEntry.COLUMN_USR_NAME+" =?";
+
+        Cursor cursor = usersDb.rawQuery(query,new String[]{username});
+
+        if(cursor.getCount()>0){
+            cursor.close();
+            return true;
+        }
+        else return false;
+
+    }
+
 
 }

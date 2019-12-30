@@ -76,8 +76,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
                 if (allValid()) {
                     //if result is true the transaction was completed successfully
-                   boolean result =  databaseHelper.insertData(email.getText().toString(),username.getText().toString(),password.getText().toString());
-                   Toast.makeText(getView().getContext(),"Returned "+result,Toast.LENGTH_SHORT).show();
+                    boolean result = databaseHelper.insertData(email.getText().toString(), username.getText().toString(), password.getText().toString());
+                    Toast.makeText(getView().getContext(), "Returned " + result, Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -98,6 +98,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email_string).matches()) {
             email_layout.setError("Wrong e-mail format");
+            return false;
+        } else if (databaseHelper.emailExists(email_string)) {
+            email_layout.setError("Account with that e-mail address already exists");
             return false;
         } else {
             email_layout.setError(null);
@@ -155,6 +158,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         TextInputLayout username_layout = (TextInputLayout) getView().findViewById(R.id.reg_username_parent);
         if (username_string.isEmpty()) {
             username_layout.setError("A username is required");
+            return false;
+        } else if (databaseHelper.emailExists(username_string)) {
+            username_layout.setError("Account with that username already exists");
             return false;
         } else {
             username_layout.setError(null);
