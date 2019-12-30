@@ -31,10 +31,12 @@
             <!-- TextInputLayout with TextInputEditText provides better functionality
                  than a simple EditText-->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_email_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_email"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -68,10 +70,12 @@
             <!-- TextInputLayout with TextInputEditText provides better functionality
                  than a simple EditText-->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_username_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_username"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -103,11 +107,13 @@
 
             <!-- password input with a toggle to make password visible-->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_password_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -140,11 +146,13 @@
 
             <!-- password input with a toggle to make password visible-->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_password_repeat_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reg_password_repeat"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
