@@ -75,6 +75,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             case R.id.register_button:
 
                 if (allValid()) {
+                    //if result is true the transaction was completed successfully
                    boolean result =  databaseHelper.insertData(email.getText().toString(),username.getText().toString(),password.getText().toString());
                    Toast.makeText(getView().getContext(),"Returned "+result,Toast.LENGTH_SHORT).show();
 
