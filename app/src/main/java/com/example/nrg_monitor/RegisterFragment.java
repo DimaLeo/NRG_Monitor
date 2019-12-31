@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
-    private UsersDatabaseHelper databaseHelper;
+    private LocalUsersDatabaseHelper databaseHelper;
     private final static Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[0-9])" +         //at least 1 digit
@@ -49,7 +48,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         register_button.setOnClickListener(this);
 
-        databaseHelper = new UsersDatabaseHelper(getView().getContext());
+        databaseHelper = new LocalUsersDatabaseHelper(getView().getContext());
 
 
     }
@@ -76,8 +75,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
                 if (allValid()) {
                     //if result is true the transaction was completed successfully
-                    boolean result = databaseHelper.insertData(email.getText().toString(), username.getText().toString(), password.getText().toString());
-                    Toast.makeText(getView().getContext(), "Returned " + result, Toast.LENGTH_SHORT).show();
+                    //boolean result = databaseHelper.insertData(email.getText().toString(), username.getText().toString(), password.getText().toString());
+                    RestPostRequestHandler postRequest = new RestPostRequestHandler(getView().getContext());
+                    //Toast.makeText(getView().getContext(), "Returned " + result, Toast.LENGTH_SHORT).show();
+
+                    postRequest.execute(email.getText().toString(),username.getText().toString(),password.getText().toString());
 
                 }
 
@@ -99,10 +101,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email_string).matches()) {
             email_layout.setError("Wrong e-mail format");
             return false;
-        } else if (databaseHelper.emailExists(email_string)) {
+        }
+        /*
+        else if (databaseHelper.emailExists(email_string)) {
             email_layout.setError("Account with that e-mail address already exists");
             return false;
-        } else {
+        }*/
+         else {
             email_layout.setError(null);
             return true;
         }
@@ -118,7 +123,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     "Password must be at least 8 characters\n" +
                     "Password must contain at least one digit");
             return false;
-        } else if (password_string.isEmpty()) {
+        }
+        else if (password_string.isEmpty()) {
             password_layout.setError("A password is required");
             return false;
         } else {
@@ -159,10 +165,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         if (username_string.isEmpty()) {
             username_layout.setError("A username is required");
             return false;
-        } else if (databaseHelper.emailExists(username_string)) {
+        }/*
+        else if (databaseHelper.emailExists(username_string)) {
             username_layout.setError("Account with that username already exists");
             return false;
-        } else {
+        }*/
+        else {
             username_layout.setError(null);
             return true;
         }
