@@ -5,15 +5,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
-public class RestPostRequestHandler extends AsyncTask<String, Integer, Integer> {
+public abstract class AsyncTaskHandler extends AsyncTask<String, Integer, Integer> {
 
     private Context activityContext;
     private UserContainer user;
     private DatabaseRequestHandler dbHandler = new DatabaseRequestHandler();
+    //id of the process that calls execute
 
-    public RestPostRequestHandler(Context context) {
+    public AsyncTaskHandler(Context context) {
 
         this.activityContext = context;
     }
@@ -24,7 +26,7 @@ public class RestPostRequestHandler extends AsyncTask<String, Integer, Integer> 
     }
 
     @Override
-    protected Integer doInBackground(String... strings) {
+    public Integer doInBackground(String... strings) {
 
         user = new UserContainer(strings[0], strings[1], strings[2]);
         Gson gson = new Gson();
@@ -34,6 +36,10 @@ public class RestPostRequestHandler extends AsyncTask<String, Integer, Integer> 
         //Log.d("Dima", userJsonString);
 
         dbHandler.insertToUsersDb(userJsonString);
+        JsonObject obj = new JsonObject();
+        obj.addProperty("email",user.getEmail());
+
+        dbHandler.emailExists(obj.toString());
 
         return null;
     }

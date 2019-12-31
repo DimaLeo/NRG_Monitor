@@ -34,6 +34,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
 
     private TextInputEditText username, email, password, rep_password;
+    private AsyncTaskHandler postRequest;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         register_button.setOnClickListener(this);
 
         databaseHelper = new LocalUsersDatabaseHelper(getView().getContext());
+        //postRequest = new AsyncTaskHandler(getView().getContext());
 
 
     }
@@ -76,7 +78,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 if (allValid()) {
                     //if result is true the transaction was completed successfully
                     //boolean result = databaseHelper.insertData(email.getText().toString(), username.getText().toString(), password.getText().toString());
-                    RestPostRequestHandler postRequest = new RestPostRequestHandler(getView().getContext());
                     //Toast.makeText(getView().getContext(), "Returned " + result, Toast.LENGTH_SHORT).show();
 
                     postRequest.execute(email.getText().toString(),username.getText().toString(),password.getText().toString());
