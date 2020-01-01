@@ -15,7 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-public class activity_login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private RelativeLayout rel_lay_1;
     private TextView app_name;
@@ -56,7 +56,7 @@ public class activity_login extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent sign_up_intent = new Intent(activity_login.this,RegisterActivity.class);
+                Intent sign_up_intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(sign_up_intent);
 
             }

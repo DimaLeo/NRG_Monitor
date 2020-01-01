@@ -1,4 +1,4 @@
-package com.example.nrg_monitor;
+package temp;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.nrg_monitor.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
