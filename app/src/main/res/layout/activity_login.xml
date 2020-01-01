@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/white"
-    tools:context=".activity_login"
+    tools:context=".LoginActivity"
     android:id="@+id/login_view"
     >
 
