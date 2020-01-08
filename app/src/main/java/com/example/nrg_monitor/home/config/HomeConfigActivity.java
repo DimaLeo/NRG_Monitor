@@ -21,27 +21,42 @@ public class HomeConfigActivity extends AppCompatActivity {
     private String email;
     private SharedPreferences mSharedPreferences;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_config);
         Intent sourceIntent = getIntent();
+        Bundle sourceExtras = sourceIntent.getExtras();
+        Log.d("Dima","From Home config Activity"+sourceExtras.getString("email"));
+        Log.d("Dima","From Home config Activity"+sourceExtras.getString("source"));
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         TextView username_view = findViewById(R.id.username_text);
 
         if(!mSharedPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.logged_in),false)){
-            if(sourceIntent.getStringExtra("Source").equals("postRegister")){
-                username= sourceIntent.getStringExtra("username");
-                email = sourceIntent.getStringExtra("email");
+            if(sourceExtras.getString("source").equals("postRegister")){
+                username= sourceExtras.getString("username");
+                email = sourceExtras.getString("email");
                 username_view.setText(username);
 
+                mSharedPreferences.edit().putBoolean(getApplicationContext().getResources().getString(R.string.logged_in),true).apply();
+                mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user),username).apply();
+                mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user_email),email).apply();
+
             }
-            else{
-                email = sourceIntent.getStringExtra("email");
+            else if(sourceExtras.getString("source").equals("postLogin")){
+
+                mSharedPreferences.edit().putBoolean(getApplicationContext().getResources().getString(R.string.logged_in),true).apply();
+                email = sourceExtras.getString("email");
+                mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user_email),email).apply();
+
+
                 String savedUsername = mSharedPreferences.getString(getApplicationContext().getResources().getString(R.string.logged_in_user),"");
                 if(!savedUsername.equals("")){
                     username = savedUsername;
+                    mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user),username).apply();
+
                     username_view.setText(username);
                 }
                 else {
@@ -113,7 +128,7 @@ public class HomeConfigActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             username = s;
-            mSharedPreferences.edit().putString("username",s);
+            mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user),username).apply();
             TextView username_view = findViewById(R.id.username_text);
             username_view.setText(s);
 

@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nrg_monitor.R;
@@ -21,8 +22,13 @@ import java.util.ArrayList;
 
 public class HomeConfigFragment extends Fragment {
 
-    private ArrayList rooms;
     private Context mContext;
+    private ArrayList rooms;
+    private RecyclerView mResyclerView;
+    private RecyclerView.Adapter mRcAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private Spinner mSpinner;
+    private Button plusButton,minusButton,continueButton;
 
     public HomeConfigFragment() {
         // Required empty public constructor
@@ -37,7 +43,6 @@ public class HomeConfigFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rooms = new ArrayList<RoomItem>();
 
     }
 
@@ -53,13 +58,21 @@ public class HomeConfigFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mContext = getContext();
 
-        Spinner spinner = view.findViewById(R.id.no_of_rooms_picker);
-        RecyclerView recycler = view.findViewById(R.id.available_rooms);
-        Button minusButton = view.findViewById(R.id.minus_button);
-        Button plusButton = view.findViewById(R.id.plus_button);
-        Button continueButoon = view.findViewById(R.id.continue_button);
+        mContext = getContext();
+        rooms = new ArrayList<RoomItem>();
+        rooms.add(new RoomItem());
+        mResyclerView = getView().findViewById(R.id.available_rooms);
+        mResyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mRcAdapter = new RoomsAdapter(rooms);
+        mResyclerView.setLayoutManager(mLayoutManager);
+        mResyclerView.setAdapter(mRcAdapter);
+
+        mSpinner = view.findViewById(R.id.no_of_rooms_picker);
+        minusButton = view.findViewById(R.id.minus_button);
+        plusButton = view.findViewById(R.id.plus_button);
+        continueButton = view.findViewById(R.id.continue_button);
 
 
 

@@ -135,14 +135,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     InsertCall insert = new InsertCall();
                     insert.execute(email.getText().toString(),username.getText().toString(),password.getText().toString());
                     Intent startHomeConfig = new Intent(getActivity(),HomeConfigActivity.class);
-                    startHomeConfig.putExtra("email",email.getText().toString());
-                    startHomeConfig.putExtra("username",username.getText().toString());
-                    startHomeConfig.putExtra("source","postRegister");
-
-                    mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.logged_in),true).apply();
-                    mSharedPreferences.edit().putString(mContext.getResources().getString(R.string.logged_in_user),username.getText().toString());
-                    mSharedPreferences.edit().putString(mContext.getResources().getString(R.string.logged_in_user_email),email.getText().toString());
-
+                    Bundle extras = new Bundle();
+                    extras.putString("email",email.getText().toString());
+                    extras.putString("username",username.getText().toString());
+                    extras.putString("username",username.getText().toString());
+                    extras.putString("source","postRegister");
+                    startHomeConfig.putExtras(extras);
                     mContext.startActivity(startHomeConfig);
                 }
 
