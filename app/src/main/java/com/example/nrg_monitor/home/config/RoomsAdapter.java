@@ -55,10 +55,10 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
 
         RoomItem currentItem = roomList.get(position);
 
-        //holder.roomImage.setImageResource(R.drawable.test_img);
-        //holder.roomNameText.setHint("Room name here");
-        //holder.roomNumberText.setText("Room "+roomList.indexOf(currentItem)+1);
-        //holder.deleteImage.setImageResource(R.drawable.ic_delete);
+        holder.roomImage.setImageResource(R.drawable.test_img);
+        holder.roomNameText.setHint("Room name here");
+        holder.roomNumberText.setText("Room "+(roomList.indexOf(currentItem)+1));
+        holder.deleteImage.setImageResource(R.drawable.ic_delete);
 
 
 

@@ -20,7 +20,7 @@ import com.example.nrg_monitor.R;
 import java.util.ArrayList;
 
 
-public class HomeConfigFragment extends Fragment {
+public class HomeConfigFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private ArrayList rooms;
@@ -61,7 +61,6 @@ public class HomeConfigFragment extends Fragment {
 
         mContext = getContext();
         rooms = new ArrayList<RoomItem>();
-        rooms.add(new RoomItem());
         mResyclerView = getView().findViewById(R.id.available_rooms);
         mResyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(mContext);
@@ -71,8 +70,11 @@ public class HomeConfigFragment extends Fragment {
 
         mSpinner = view.findViewById(R.id.no_of_rooms_picker);
         minusButton = view.findViewById(R.id.minus_button);
+        minusButton.setOnClickListener(this);
         plusButton = view.findViewById(R.id.plus_button);
+        plusButton.setOnClickListener(this);
         continueButton = view.findViewById(R.id.continue_button);
+        continueButton.setOnClickListener(this);
 
 
 
@@ -94,4 +96,24 @@ public class HomeConfigFragment extends Fragment {
         mContext = null;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.plus_button:
+
+                rooms.add(new RoomItem());
+                 mRcAdapter.notifyItemInserted(rooms.size());
+
+                break;
+            case R.id.minus_button:
+                if(!rooms.isEmpty()){
+                    rooms.remove((rooms.size()-1));
+                    mRcAdapter.notifyItemRemoved(rooms.size()+1);
+                }
+
+        }
+
+    }
 }
