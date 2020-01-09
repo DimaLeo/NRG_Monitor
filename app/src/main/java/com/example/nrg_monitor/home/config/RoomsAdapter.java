@@ -3,6 +3,7 @@ package com.example.nrg_monitor.home.config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +17,20 @@ import java.util.ArrayList;
 
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHolder>{
 
+    private onItemClickListener mListener;
     private ArrayList<RoomItem> roomList;
+
+
+    public interface onItemClickListener{
+        void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickedListener(onItemClickListener listener){
+
+        mListener = listener;
+
+    }
+
 
     public static class RoomViewHolder extends RecyclerView.ViewHolder{
 
@@ -25,7 +39,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         public ImageView deleteImage;
         public TextInputEditText roomNameText;
 
-        public RoomViewHolder(@NonNull View itemView) {
+        public RoomViewHolder(@NonNull View itemView, final onItemClickListener listener) {
             super(itemView);
 
             roomImage = itemView.findViewById(R.id.room_image);
@@ -33,8 +47,19 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
             deleteImage = itemView.findViewById(R.id.deleteImage);
             roomNameText = itemView.findViewById(R.id.room_name_field);
 
-        }
+            deleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
 
+        }
 
     }
 
@@ -46,7 +71,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.room_picker_item,parent,false);
-        RoomViewHolder rvh = new RoomViewHolder(v);
+        RoomViewHolder rvh = new RoomViewHolder(v,mListener);
         return  rvh;
     }
 
@@ -59,6 +84,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomViewHold
         holder.roomNameText.setHint("Room name here");
         holder.roomNumberText.setText("Room "+(roomList.indexOf(currentItem)+1));
         holder.deleteImage.setImageResource(R.drawable.ic_delete);
+
 
 
 
