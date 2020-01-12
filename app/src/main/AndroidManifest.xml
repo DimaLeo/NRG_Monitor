@@ -13,23 +13,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".main.app.MainActivity"></activity>
         <activity
             android:name=".splash.screen.SplashScreenActivity"
             android:noHistory="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.config.HomeConfigActivity" />
+        <activity
+            android:name=".home.config.HomeConfigActivity"
+            android:noHistory="true" />
         <activity
             android:name=".ui.accounts.RegisterActivity"
             android:noHistory="true"
-            android:theme="@style/RegisterTheme">
-
-        </activity>
+            android:theme="@style/RegisterTheme" />
     </application>
 
 </manifest>

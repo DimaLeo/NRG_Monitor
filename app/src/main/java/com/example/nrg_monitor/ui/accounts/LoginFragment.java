@@ -237,8 +237,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             mSharedPreferences.edit().putString(mContext.getResources().getString(R.string.logged_in_user_email),emailInput.getText().toString()).apply();
                             mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.logged_in),true);
                             Intent takeMeToMainMenu = new Intent((RegisterActivity)mContext, HomeConfigActivity.class);
-                            takeMeToMainMenu.putExtra("Source","postLogin");
-                            takeMeToMainMenu.putExtra("email",emailInput.getText().toString());
+                            Bundle extra = new Bundle();
+                            extra.putString("source","postLogin");
+                            extra.putString("email",emailInput.getText().toString());
+                            takeMeToMainMenu.putExtras(extra);
                             mContext.startActivity(takeMeToMainMenu);
                         }
 

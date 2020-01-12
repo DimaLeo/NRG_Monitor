@@ -2,6 +2,8 @@ package com.example.nrg_monitor.home.config;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +17,12 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nrg_monitor.R;
+import com.example.nrg_monitor.main.app.MainActivity;
 
 import java.util.ArrayList;
 
@@ -34,6 +38,7 @@ public class HomeConfigFragment extends Fragment implements View.OnClickListener
     private Button plusButton,minusButton,continueButton;
     private final Integer[] SPINNER_ITEMS = new Integer[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
     private ArrayAdapter<Integer> spinnerAdapter;
+    private SharedPreferences mSharedPreferences;
 
     public HomeConfigFragment() {
         // Required empty public constructor
@@ -48,6 +53,7 @@ public class HomeConfigFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
     }
 
@@ -144,8 +150,17 @@ public class HomeConfigFragment extends Fragment implements View.OnClickListener
             case R.id.minus_button:
                 if(!rooms.isEmpty()){
                     mSpinner.setSelection(mSpinner.getSelectedItemPosition()-1);
-
                 }
+                break;
+
+            case R.id.continue_button:
+                Intent intent = new Intent(mContext, MainActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("rooms",rooms);
+                intent.putExtras(extra);
+                mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.has_home_config),true).apply();
+                mContext.startActivity(intent);
+
 
         }
 
@@ -178,5 +193,10 @@ public class HomeConfigFragment extends Fragment implements View.OnClickListener
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }

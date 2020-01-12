@@ -1,10 +1,8 @@
 package com.example.nrg_monitor.home.config;
 
-import android.media.Image;
+import java.io.Serializable;
 
-public class RoomItem {
-
-
+public class RoomItem implements Serializable {
 
     public RoomItem(){
 

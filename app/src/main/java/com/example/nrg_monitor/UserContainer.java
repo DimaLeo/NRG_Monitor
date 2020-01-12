@@ -1,7 +1,7 @@
 package com.example.nrg_monitor;
 
 //used to store data of the user object
-public class UserContainer {
+public class UserContainer{
 
     private int id;
     private String email;
@@ -36,4 +36,6 @@ public class UserContainer {
     public String getPassword() {
         return password;
     }
+
+
 }
