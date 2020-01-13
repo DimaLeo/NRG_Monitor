@@ -19,10 +19,12 @@ import androidx.preference.PreferenceManager;
 import com.example.nrg_monitor.DbRequestHandler;
 import com.example.nrg_monitor.R;
 import com.example.nrg_monitor.home.config.HomeConfigActivity;
+import com.example.nrg_monitor.main.app.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
+    private boolean hasHomeConfigured;
 
     private Button loginButton;
     private TextInputEditText emailInput,passwordInput;
@@ -102,7 +104,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             case R.id.login_button:
 
-                new TempFixForButtonOnClick().execute();
+                //TODO: make db call to check wether the user has a home config by his email
+                new TempFixForButtonOnClick().execute(emailInput.getText().toString());
 
                 break;
 
@@ -189,7 +192,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private class TempFixForButtonOnClick extends AsyncTask<Void,Void,Void>{
+
+    private class TempFixForButtonOnClick extends AsyncTask<String,Void,Boolean>{
 
         @Override
         protected void onPreExecute() {
@@ -201,13 +205,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
+        protected Boolean doInBackground(String... strings) {
+
+            DbRequestHandler dbRequestHandler = new DbRequestHandler();
+            hasHomeConfigured=dbRequestHandler.hasHomeConfigByEmail(strings[0]);
+
+            return hasHomeConfigured;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
 
             TextInputLayout password_outer = getView().findViewById(R.id.login_password_parent);
             TextInputLayout email_layout = getView().findViewById(R.id.reg_email_parent);
@@ -228,14 +236,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                     if(correctPassword){
 
-                        boolean hasHomeConfigured = false;
-                        hasHomeConfigured = mSharedPreferences.getBoolean(mContext.getResources().getString(R.string.has_home_config),false);
+                        mSharedPreferences.edit().putString(mContext.getResources().getString(R.string.logged_in_user_email),emailInput.getText().toString()).apply();
+                        mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.logged_in),true);
+
                         if(hasHomeConfigured){
+
+                            Intent takeMeToMainMenu = new Intent((RegisterActivity)mContext, MainActivity.class);
+                            Bundle extra = new Bundle();
+                            extra.putString("email",emailInput.getText().toString());
+                            takeMeToMainMenu.putExtras(extra);
+                            mContext.startActivity(takeMeToMainMenu);
+
 
                         }
                         else {
-                            mSharedPreferences.edit().putString(mContext.getResources().getString(R.string.logged_in_user_email),emailInput.getText().toString()).apply();
-                            mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.logged_in),true);
+
                             Intent takeMeToMainMenu = new Intent((RegisterActivity)mContext, HomeConfigActivity.class);
                             Bundle extra = new Bundle();
                             extra.putString("source","postLogin");

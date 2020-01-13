@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +23,10 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nrg_monitor.DbRequestHandler;
 import com.example.nrg_monitor.R;
 import com.example.nrg_monitor.main.app.MainActivity;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
@@ -158,7 +162,9 @@ public class HomeConfigFragment extends Fragment implements View.OnClickListener
                 Bundle extra = new Bundle();
                 extra.putSerializable("rooms",rooms);
                 intent.putExtras(extra);
-                mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.has_home_config),true).apply();
+                String username = mSharedPreferences.getString(mContext.getResources().getString(R.string.logged_in_user),"");
+                new ChangeHomeConfigStatus().execute(username);
+
                 mContext.startActivity(intent);
 
 
@@ -199,4 +205,31 @@ public class HomeConfigFragment extends Fragment implements View.OnClickListener
     public void onStop() {
         super.onStop();
     }
+
+    private class ChangeHomeConfigStatus extends AsyncTask<String,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            DbRequestHandler dbRequestHandler = new DbRequestHandler();
+
+            dbRequestHandler.changeHomeConfigStatus(strings[0]);
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast toast = Toast.makeText(mContext,"Home configuration Created",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+    }
+
 }

@@ -7,6 +7,7 @@ public class UserContainer{
     private String email;
     private String username;
     private String password;
+    private int hasHomeConfig;
 
     public UserContainer(int id,String email, String username, String password) {
 
@@ -14,12 +15,14 @@ public class UserContainer{
         this.email = email;
         this.username = username;
         this.password = password;
+        this.hasHomeConfig = 0;
     }
 
     public UserContainer(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.hasHomeConfig = 0;
     }
     public UserContainer() {
     }
@@ -37,5 +40,11 @@ public class UserContainer{
         return password;
     }
 
+    public int getHasHomeConfig() {
+        return hasHomeConfig;
+    }
 
+    public void setHasHomeConfig(int hasHomeConfig) {
+        this.hasHomeConfig = hasHomeConfig;
+    }
 }

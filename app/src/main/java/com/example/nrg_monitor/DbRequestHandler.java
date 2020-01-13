@@ -1,5 +1,7 @@
 package com.example.nrg_monitor;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -98,6 +100,49 @@ public class DbRequestHandler{
         return response;
     }
 
+    public Boolean hasHomeConfigByUsername(String username){
+        JsonObject obj = new JsonObject();
+        obj.addProperty("username",username);
+
+        String jsonString = obj.toString();
+        response = dbCommunication("/users/getHomeConfig",jsonString);
+
+        if(response.equals("0")){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
+    }
+
+    public Boolean hasHomeConfigByEmail(String email){
+        JsonObject obj = new JsonObject();
+        obj.addProperty("email",email);
+
+        String jsonString = obj.toString();
+        response = dbCommunication("/users/getHomeConfig",jsonString);
+
+        if(response.equals("0")){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
+    }
+
+    public void changeHomeConfigStatus(String username){
+
+        JsonObject obj = new JsonObject();
+
+        String jsonString = obj.toString();
+        response = dbCommunicationPut("/users/homeConfigChanged/"+username,jsonString);
+        Log.d("Dima",response);
+    }
+
     //handles request sending and reply receiving from server
     //gets the url for the required web service method and the json it is supposed to send
     private String dbCommunication(String endOfUrl, String jsonMessage){
@@ -120,6 +165,30 @@ public class DbRequestHandler{
         }
         return null;
     }
+
+    private String dbCommunicationPut(String endOfUrl, String jsonMessage){
+
+        //create a client
+        OkHttpClient client = new OkHttpClient();
+        //add Json String to the body of the request
+        RequestBody body = RequestBody.create(jsonMessage, JSON);
+        //send the request
+        Request request = new Request.Builder().url(WEB_SERVICE_URL+""+endOfUrl).put(body).build();
+        try {
+            //receive response
+            Response response = client.newCall(request).execute();
+            String httpResponse = response.body().string();
+            //Log.d("Dima",httpResponse);
+            return httpResponse;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 }
 
 

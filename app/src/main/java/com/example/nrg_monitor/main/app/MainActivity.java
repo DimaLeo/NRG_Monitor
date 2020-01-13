@@ -1,7 +1,9 @@
 package com.example.nrg_monitor.main.app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.DropBoxManager;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -12,18 +14,22 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
 
+import com.example.nrg_monitor.DbRequestHandler;
 import com.example.nrg_monitor.R;
+import com.example.nrg_monitor.ui.accounts.RegisterActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    private SharedPreferences mSharedPreferences ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -44,7 +50,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()){
             case R.id.nav_log_out:
-                mSharedPreferences.edit()
+                mSharedPreferences.edit().putBoolean(getApplicationContext().getResources().getString(R.string.logged_in),false).apply();
+                mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user),"").apply();
+                mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user_email),"").apply();
+                Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
+                MainActivity.this.startActivity(intent);
 
                 break;
         }
