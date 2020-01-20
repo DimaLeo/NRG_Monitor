@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
+            case R.id.nav_device_control:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DeviceControlFragment()).commit();
+                break;
             case R.id.nav_log_out:
                 mSharedPreferences.edit().putBoolean(getApplicationContext().getResources().getString(R.string.logged_in),false).apply();
                 mSharedPreferences.edit().putString(getApplicationContext().getResources().getString(R.string.logged_in_user),"").apply();
