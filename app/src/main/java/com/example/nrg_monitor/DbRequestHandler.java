@@ -44,6 +44,11 @@ public class DbRequestHandler {
         return response = dbCommunication("/users", userJson);
     }
 
+    public String insertToDevices(String jsonString){
+
+        return response = dbCommunication("/devices",jsonString);
+    }
+
     public Integer emailExists(String email) {
 
         JsonObject obj = new JsonObject();
@@ -167,7 +172,7 @@ public class DbRequestHandler {
 
                 String device_name = object.getString("device_name");
                 String device_type = object.getString("device_type");
-                Integer device_brand = object.getInt("device_brand");
+                String device_brand = object.getString("device_brand");
                 Integer device_wattage = object.getInt("device_wattage");
                 Double device_runtime = object.getDouble("device_runtime");
                 Integer device_activity_status = object.getInt("device_activity_status");

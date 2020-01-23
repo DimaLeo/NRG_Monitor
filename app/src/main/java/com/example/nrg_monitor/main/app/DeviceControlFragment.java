@@ -21,14 +21,14 @@ import com.example.nrg_monitor.R;
 import java.util.ArrayList;
 
 
-public class DeviceControlFragment extends Fragment implements View.OnClickListener{
+public class DeviceControlFragment extends Fragment implements View.OnClickListener {
 
     private DbRequestHandler dbRequestHandler = new DbRequestHandler();
     private ArrayList<Device> devices = new ArrayList<Device>();
     private SharedPreferences mSharedPreferences;
     private String currentUsername;
     private Context mContext;
-
+    private InsertDeviceDialog dialog;
 
 
     @Override
@@ -37,12 +37,6 @@ public class DeviceControlFragment extends Fragment implements View.OnClickListe
         mContext = getContext();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         currentUsername = mSharedPreferences.getString(getContext().getResources().getString(R.string.logged_in_user),"");
-        Button insertDevice = getActivity().findViewById(R.id.insert_device_button);
-        insertDevice.setOnClickListener(this);
-
-
-
-
     }
 
     @Nullable
@@ -53,17 +47,26 @@ public class DeviceControlFragment extends Fragment implements View.OnClickListe
 
         return inflater.inflate(R.layout.fragment_device_control,container,false);
 
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Button insertDevice = getView().findViewById(R.id.insert_device_button);
+        insertDevice.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
+        dialog = new InsertDeviceDialog();
+        dialog.show(DeviceControlFragment.this.getChildFragmentManager(),"InsertDeviceDialog");
+
+    }
+
+    public void Refresh(){
+        new getDevicesTask().execute(currentUsername);
     }
 
 

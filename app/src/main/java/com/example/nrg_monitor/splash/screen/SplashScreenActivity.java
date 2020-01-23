@@ -52,7 +52,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         final boolean logged_in = mPreferences.getBoolean(getApplicationContext().getResources().getString(R.string.logged_in),false);
 
 
-        final String username,email;
+
         if(logged_in){
 
             username = mPreferences.getString(getApplicationContext().getResources().getString(R.string.logged_in_user),"");

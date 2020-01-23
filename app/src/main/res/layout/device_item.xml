@@ -76,10 +76,10 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="Kwh Consumed:"
-            app:layout_constraintStart_toEndOf="@+id/device_name_label"
+            app:layout_constraintStart_toEndOf="@+id/device_type_label"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
@@ -98,7 +98,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:backgroundTint="@android:color/darker_gray"
             android:text="On/off"
+            android:thumbTint="#3773AF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 

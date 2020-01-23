@@ -237,7 +237,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     if(correctPassword){
 
                         mSharedPreferences.edit().putString(mContext.getResources().getString(R.string.logged_in_user_email),emailInput.getText().toString()).apply();
-                        mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.logged_in),true);
+                        mSharedPreferences.edit().putBoolean(mContext.getResources().getString(R.string.logged_in),true).apply();
 
                         if(hasHomeConfigured){
 

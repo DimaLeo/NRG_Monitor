@@ -26,6 +26,7 @@
     <string name="logged_in_user">logged_in_user</string>
     <string name="logged_in_user_email">logged_in_user_email</string>
     <string name="has_home_config">has_home_config</string>
+    <string name="logged_in_user_image_uri">logged_in_user_image_uri</string>
 
 
 </resources>
