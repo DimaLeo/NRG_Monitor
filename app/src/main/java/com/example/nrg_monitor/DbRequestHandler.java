@@ -151,6 +151,17 @@ public class DbRequestHandler {
         Log.d("Dima", response);
     }
 
+    public void changeDeviceState(long timestamp,int device_id){
+
+        JsonObject obj = new JsonObject();
+        obj.addProperty("timestamp",timestamp);
+
+        String jsonString = obj.toString();
+
+        response = dbCommunicationPut("/devices/activityStatusChanged/"+device_id,jsonString);
+
+    }
+
     public ArrayList<Device> getAllDevices(String username){
 
 
@@ -170,6 +181,7 @@ public class DbRequestHandler {
 
                 JSONObject object = jsonArray.getJSONObject(i);
 
+                Integer device_id = object.getInt("device_id");
                 String device_name = object.getString("device_name");
                 String device_type = object.getString("device_type");
                 String device_brand = object.getString("device_brand");
@@ -177,7 +189,8 @@ public class DbRequestHandler {
                 Double device_runtime = object.getDouble("device_runtime");
                 Integer device_activity_status = object.getInt("device_activity_status");
 
-                devices.add(new Device(device_name,device_type,device_brand,device_wattage,device_runtime,device_activity_status));
+                devices.add(new Device(device_id,device_name,device_type,device_brand,device_wattage,device_runtime,device_activity_status));
+
 
             }
 

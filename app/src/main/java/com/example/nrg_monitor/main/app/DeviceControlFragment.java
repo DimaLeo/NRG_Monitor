@@ -21,7 +21,7 @@ import com.example.nrg_monitor.R;
 import java.util.ArrayList;
 
 
-public class DeviceControlFragment extends Fragment implements View.OnClickListener {
+public class DeviceControlFragment extends Fragment implements View.OnClickListener , DevicesAdapter.EventListener {
 
     private DbRequestHandler dbRequestHandler = new DbRequestHandler();
     private ArrayList<Device> devices = new ArrayList<Device>();
@@ -69,6 +69,10 @@ public class DeviceControlFragment extends Fragment implements View.OnClickListe
         new getDevicesTask().execute(currentUsername);
     }
 
+    @Override
+    public void onEvent() {
+        Refresh();
+    }
 
 
     private class getDevicesTask extends AsyncTask<String,Void,ArrayList<Device>>{
@@ -79,7 +83,7 @@ public class DeviceControlFragment extends Fragment implements View.OnClickListe
             devices = fetchedDevices;
             ListView listView = getView().findViewById(R.id.devices_container);
 
-            DevicesAdapter adapter = new DevicesAdapter(mContext,R.layout.device_item,devices);
+            DevicesAdapter adapter = new DevicesAdapter(mContext,R.layout.device_item,devices,DeviceControlFragment.this);
             listView.setAdapter(adapter);
 
         }

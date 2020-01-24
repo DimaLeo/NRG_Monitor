@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +149,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(Integer i) {
             super.onPostExecute(i);
-            //Log.d("Dima","Entries found with that email :"+i);
+            Log.d("Dima","Entries found with that email :"+i);
             Integer matches_found = i;
             if(matches_found>0){
                 emailFound = true;
@@ -218,7 +219,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             super.onPostExecute(aBoolean);
 
             TextInputLayout password_outer = getView().findViewById(R.id.login_password_parent);
-            TextInputLayout email_layout = getView().findViewById(R.id.reg_email_parent);
+            TextInputLayout email_layout = getView().findViewById(R.id.login_email_parent);
 
             boolean emailEmpty = emailInput.getText().toString().isEmpty();
             boolean passwordEmpty = passwordInput.getText().toString().isEmpty();

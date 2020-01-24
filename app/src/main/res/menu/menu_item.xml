@@ -5,18 +5,12 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_hub"
-            android:title="Central Hub" />
-        <item
-            android:id="@+id/nav_suggestions"
-            android:title="Suggestions" />
+            android:id="@+id/nav_device_control"
+            android:title="Device control" />
         <item
             android:id="@+id/nav_about"
             android:title="About" />
 
-        <item
-            android:id="@+id/nav_device_control"
-            android:title="Device control" />
 
     </group>
 
@@ -25,9 +19,7 @@
             <item
                 android:id="@+id/nav_log_out"
                 android:title="Log out" />
-            <item
-                android:id="@+id/nav_other"
-                android:title="Something else" />
+
         </menu>
     </item>
 
